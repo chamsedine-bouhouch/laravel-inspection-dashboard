@@ -22,6 +22,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'qualification',
+        'isAdmin'
+
     ];
 
     /**
@@ -42,4 +46,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    // relationships
+    public function checklists()
+    {
+        return $this->hasMany(Checklist::class);
+    }
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
+    }
 }

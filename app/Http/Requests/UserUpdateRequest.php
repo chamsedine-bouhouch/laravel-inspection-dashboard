@@ -26,10 +26,9 @@ class UserUpdateRequest extends FormRequest
         return [
             
             'name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'Phone' => ['required', 'string', 'min:8'],
+            'phone' => ['integer', 'min:8'],
             'email' => ['required', 'string', 'email', 'max:255'],
-            'Qualification' => ['required', 'string', 'max:255'],
+            'qualification' => [ 'string', 'max:255'],
         ];
     }
 }

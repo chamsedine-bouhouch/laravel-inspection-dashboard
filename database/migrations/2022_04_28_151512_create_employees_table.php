@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('UserDetail', function (Blueprint $table) {
+        Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->string('full_name'
-        );
-            $table->string('street_address')->nullable();
-            $table->string('zip_code')->nullable();
-            $table->string('city')->nullable();
+            $table->string('qualification');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }
@@ -31,6 +28,9 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('employees', function(Blueprint $table){
+            $table->dropForeign(['user_id']);
+        });
+        Schema::dropIfExists('employees');
     }
 };

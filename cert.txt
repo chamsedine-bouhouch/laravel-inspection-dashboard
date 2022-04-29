@@ -1,0 +1,49 @@
+form certificate
+
+--entete--
+"
+-------------------
+Certificate_No. <input> -> clé primaire 
+date_of_examination <datetime>
+date_of_repport <datetime>
+date_of_last_thorough
+client_name <input>
+model < <=table equippement >
+id_equippement < <=table equippement >
+Manufacturer_Name<<=table equippement>
+location <tring or (google maps)>
+reference  <input>
+result_inspection<input>"
+no_of_partline< <= table equippement>
+type 
+--------------
+body "
+-------------------------------
+les questions <checkbox or singlechoice avec les condition si yes et si no>
+"
+-------------------------
+--footer--
+inspection result < ??>
+type of examination<>
+inspected by <listbox <= table employee>
+ Next Due Date <datetime>
+ais lifting inspector <list box  <= table employee>
+ais inspection manager <disabled for employee>
+
+-----------------------------------------
+
+form checklist :
+client_name <input>
+manifacturer_name< <=table équippement>
+model < <=table equippement >
+id_equippement < <=table equippement >
+Manufacturer_Name<<=table equippement>
+type /type and nature of power <input >
+capacity <  <=table equippement >
+-----------------
+body 
+---------------------------------------
+tous les questions <checkbox ou single choice ("satisfactory"   ou "unsatisfactory" ou "Not applicable")+ remarque >
+ -------------------------
+inspected by(avec signature) (list box <= table employée )
+ client (signature client)

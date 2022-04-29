@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Checklist;
+use App\Models\Certification;
 use Illuminate\Http\Request;
 
-class ChecklistController extends Controller
+class CertificationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ChecklistController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Checklist  $checklist
+     * @param  \App\Models\Certification  $certification
      * @return \Illuminate\Http\Response
      */
-    public function show(Checklist $checklist)
+    public function show(Certification $certification)
     {
         //
     }
@@ -52,10 +52,10 @@ class ChecklistController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Checklist  $checklist
+     * @param  \App\Models\Certification  $certification
      * @return \Illuminate\Http\Response
      */
-    public function edit(Checklist $checklist)
+    public function edit(Certification $certification)
     {
         //
     }
@@ -64,10 +64,10 @@ class ChecklistController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Checklist  $checklist
+     * @param  \App\Models\Certification  $certification
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Checklist $checklist)
+    public function update(Request $request, Certification $certification)
     {
         //
     }
@@ -75,10 +75,10 @@ class ChecklistController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Checklist  $checklist
+     * @param  \App\Models\Certification  $certification
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Checklist $checklist)
+    public function destroy(Certification $certification)
     {
         //
     }

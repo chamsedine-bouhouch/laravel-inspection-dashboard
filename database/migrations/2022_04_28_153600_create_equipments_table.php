@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('certificats', function (Blueprint $table) {
+        Schema::create('equipments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('checklist_id')->constrained('checklists');
             $table->timestamps();
         });
     }
@@ -26,6 +27,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('certificats');
+        Schema::table('equipments', function(Blueprint $table){
+            $table->dropForeign(['checklist_id']);
+        });
+        Schema::dropIfExists('equipments');
     }
 };

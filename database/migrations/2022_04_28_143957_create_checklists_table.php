@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('checklist', function (Blueprint $table) {
+        Schema::create('checklists', function (Blueprint $table) {
             $table->id();
-            $table->string('titel'
-        );
+            $table->string('title');
             $table->date('date_inspection')->nullable();
             $table->string('rapport_pdf')->nullable();
             $table->string('sticker_png')->nullable();
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }
@@ -31,6 +31,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('checklist');
+        Schema::table('checklists', function(Blueprint $table){
+            $table->dropForeign(['user_id']);
+        });
+        Schema::dropIfExists('checklists');
     }
 };

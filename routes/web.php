@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\employeesController;
-use App\Http\Controllers\checklistcontroller;
-use App\Models\checklist;
-use App\Models\employees;
+use App\Http\Controllers\ChecklistController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\ReportController;
 use illuminate\support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -30,14 +29,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
  Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 
-Auth::routes();
-
-
-
-Auth::routes();
-
-
-
-Route::resource('employees' ,employeesController::class);
-Route::resource('checklist' ,checklistcontroller::class);
-Route::resource('rapport' ,reportcontroller::class);
+ Route::middleware(['auth'])->group(function () {
+    Route::resource('employees', EmployeeController::class);
+    Route::resource('checklist', ChecklistController::class);
+    Route::resource('rapport', ReportController::class);
+});
