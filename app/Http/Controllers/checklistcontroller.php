@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Checklist;
+use App\Models\Forms\Form;
+use App\Models\Forms\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use File;
 
 class ChecklistController extends Controller
 {
@@ -12,9 +16,27 @@ class ChecklistController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $checklist = Checklist::all();
+        if ($request->has('search')) {
+            $checklist = Checklist::where('title', 'like', "%{$request->search}%")->orWhere('date_inspection', 'like', "%{$request->search}%")->get();
+        }
+        // $path = Storage::path('form_1.json');
+        // $json = json_decode($path, true);
+
+        // $json = File::get(Storage::path('data/form_1.json'));
+        // $json_data = json_decode($json);
+
+
+        $forms = Form::all();
+        foreach ($forms as  $form) {
+            $questions = Question::where('form_id', $form->id)->get();
+            $form->setAttribute('questions', $questions);
+        }
+        dd(response()->json($forms));
+
+        return view('checklists.index', compact('checklist', 'json_data'));
     }
 
     /**
@@ -80,6 +102,7 @@ class ChecklistController extends Controller
      */
     public function destroy(Checklist $checklist)
     {
-        //
+        $checklist->delete();
+        return redirect()->route('checklists.index')->with('message', 'Checklist Deleted Succesfully');
     }
 }

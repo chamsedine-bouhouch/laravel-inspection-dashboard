@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Forms\Answer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,5 +30,10 @@ class Checklist extends Model
     public function equipments()
     {
         return $this->hasMany(Equipment::class);
+    }
+    
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
     }
 }

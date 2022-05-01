@@ -63,15 +63,8 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $employee)
     {
-        // $employee = User::find($id);
-      
-        // $myRequest = new Request();
-
-        // return view('employees.index', [
-        //     'employees' => $this->index($myRequest)
-        // ]);
     }
 
     /**
@@ -80,12 +73,9 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $employee)
 
     {
-
-        $employee = User::find($id);
-        // dd($employee);
         return view('employees.edit', compact('employee'));
     }
 
@@ -96,22 +86,10 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(UserUpdateRequest $request,$id)
+    public function update(UserUpdateRequest $request,User $employee)
     {
-        $employee = User::find($id);
-        $employee->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'qualification' => $request->qualification,
-        ]);
-        // $employee->name = $request->name;
-        // $employee->email = $request->email;
-        // $employee->phone = $request->phone;
-        // $employee->qualification = $request->qualification;
-        // $employee->save();
-        // return view('employees.edit', compact('employee'));
-        return redirect()->route('employees.index')->with('message', 'employees updated');
+        $employee->update($request->all());
+        return redirect()->route('employees.index')->with('message', 'Employee updated');
     }
 
     /**
@@ -120,11 +98,9 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $employee)
     {
-     
-        $user = User::find($id);
-        $user->delete();
-        return redirect()->route('employees.index')->with('message', 'User Deleted Succesfully');
+        $employee->delete();
+        return redirect()->route('employees.index')->with('message', 'Employee Deleted Succesfully');
     }
 }

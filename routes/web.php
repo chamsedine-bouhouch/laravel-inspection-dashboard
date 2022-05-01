@@ -31,6 +31,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
  Route::middleware(['auth'])->group(function () {
     Route::resource('employees', EmployeeController::class);
-    Route::resource('checklist', ChecklistController::class);
+    Route::resource('checklists', ChecklistController::class);
     Route::resource('rapport', ReportController::class);
 });

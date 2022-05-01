@@ -48,13 +48,13 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider">
-            <li class="nav-item active">
+            <!-- <li class="nav-item active">
                 <a class="nav-link" href="#">
 
-                    <span>Inspection Managment </span></a>
+                    <span> Managment Section </span></a>
             </li>
 
-            <hr class="sidebar-divider">
+            <hr class="sidebar-divider"> -->
 
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -62,15 +62,13 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>inspection managment </span>
+                    <span>Inspection </span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="{{route('employees.index')}}">inspections repport</a>
-                        <a class="collapse-item" href="{{route('checklist.index')}}">checklist</a>
-                        <a class="collapse-item" href="{{route('rapport.index')}}">project</a>
-                        <a class="collapse-item" href="cards.html">equipment</a>
+                        <!-- <h6 class="collapse-header">Resources:</h6> -->
+                        <!-- <a class="collapse-item" href="{{route('employees.index')}}">Employees</a> -->
+                        <a class="collapse-item" href="{{route('checklists.index')}}"> Inspection Report</a>
                     </div>
                 </div>
             </li>
@@ -88,9 +86,9 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="{{route('employees.index')}}">inspectors</a>
-                        <a class="collapse-item" href="{{route('checklist.index')}}">checklist</a>
-                        <a class="collapse-item" href="{{route('rapport.index')}}">project</a>
+                        <!-- <a class="collapse-item" href="{{route('employees.index')}}">Employees</a>
+                        <a class="collapse-item" href="{{route('checklists.index')}}">Checklist</a> -->
+                        <!-- <a class="collapse-item" href="{{route('rapport.index')}}">project</a> -->
                     </div>
                 </div>
             </li>
@@ -99,9 +97,18 @@
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
+            <!-- <div class="sidebar-heading">
                 Addons
-            </div>
+            </div> -->
+             <!-- Nav Item - Pages Collapse Menu -->
+          <li class="nav-item">
+                <a class="nav-link " href="{{route('employees.index')}}" >
+                    <i class="fas fa-fw fa-users"></i>
+                    
+                    <span>Employes</span>
+                </a>
+           
+            </li> 
 
             <!-- Nav Item - Pages Collapse Menu -->
             <!-- <li class="nav-item">
