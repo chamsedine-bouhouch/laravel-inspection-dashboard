@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Checklist;
 use App\Models\Forms\Form;
 use App\Models\Forms\Question;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use File;
+use Illuminate\Support\Facades\App;
 
 class ChecklistController extends Controller
 {
@@ -18,25 +20,30 @@ class ChecklistController extends Controller
      */
     public function index(Request $request)
     {
-        $checklist = Checklist::all();
+        $checklists = Checklist::all();
         if ($request->has('search')) {
-            $checklist = Checklist::where('title', 'like', "%{$request->search}%")->orWhere('date_inspection', 'like', "%{$request->search}%")->get();
+            $checklists = Checklist::where('title', 'like', "%{$request->search}%")->orWhere('date_inspection', 'like', "%{$request->search}%")->get();
         }
-        // $path = Storage::path('form_1.json');
-        // $json = json_decode($path, true);
 
-        // $json = File::get(Storage::path('data/form_1.json'));
-        // $json_data = json_decode($json);
 
 
         $forms = Form::all();
-        foreach ($forms as  $form) {
+        foreach($forms as  $form) {
             $questions = Question::where('form_id', $form->id)->get();
             $form->setAttribute('questions', $questions);
         }
-        dd(response()->json($forms));
 
-        return view('checklists.index', compact('checklist', 'json_data'));
+
+        return view('checklists.index', compact('checklists','forms'));
+    }
+
+    public function checklist_pdf(Checklist $checklist)
+    {
+        // dd($checklist);
+        $pdf = App::make('dompdf.wrapper');
+        $pdf = $pdf->loadView('pdf.inspection', compact('checklist'));
+        // return $pdf->download('inspection.pdf');
+        return $pdf->stream();
     }
 
     /**

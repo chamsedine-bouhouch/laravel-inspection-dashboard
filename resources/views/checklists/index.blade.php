@@ -64,7 +64,7 @@
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                  <h5 class="modal-title" id="exampleModalLongTitle">Checklist Form</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -73,7 +73,14 @@
                   <form>
                     <div class="mb-3">
                       <label for="exampleInputEmail1" class="form-label">Email address</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                      <!-- <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> -->
+                      <select name="checklist_form" id="" class="form-control">
+                        @foreach ( $forms as $form)
+                        <option value="{{$form->id}}">{{$form->title}}</option>
+                          
+                        @endforeach
+                        
+                      </select>
 
                     </div>
                     <div class="mb-3">
@@ -117,23 +124,26 @@
             <th scope="col">title</th>
             <th scope="col">date_inspection</th>
             <th scope="col">rapport_pdf</th>
-            <th scope="col">sticker_png</th>
-            <th scope="col"> </th>
+            <!-- <th scope="col">sticker_png</th> -->
             <th scope="col">manage</th>
+            <th scope="col"> </th>
 
 
           </tr>
         </thead>
         <tbody>
-          @foreach ($checklist as $checklist)
+          @foreach ($checklists as $checklist)
           <tr>
             <th scope="row">{{$checklist->id}}</th>
-            <td>{{$checklist->titel}}</td>
+            <td>{{$checklist->title}}</td>
             <td>{{$checklist->date_inspection}}</td>
-            <td>{{$checklist->rapport_pdf}}</td>
-            <td>{{$checklist->sticker_png}}</td>
             <td>
-              <a href="{{ route('checklists.edit', $checklist->id) }}" class="btn btn-success">Edit</a>
+            <a href="{{ route('checklist_pdf', $checklist->id) }}" class="btn btn-outline-info">pdf</a>
+            </td>
+            <!-- <td>{{$checklist->sticker_png}}</td> -->
+            <td>
+            <a href="{{ route('checklists.edit', $checklist->id) }}" class="btn btn-success">Edit</a>
+             
 
             </td>
             <td> <a href="{{ route('checklists.destroy', $checklist->id) }}" class="btn btn-danger">delete</a> </td>
