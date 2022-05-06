@@ -47,13 +47,46 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form method="GET" action="{{ route('checklists.create') }}">
-                  @csrf
+                  <form method="POST" action="{{ route('checklists.store') }}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-3">
+                      <label for="title" class="form-label">Title</label>
+                      <input type="text" class="form-control" id="title" name="title">
+                    </div>
+                    <div class="mb-3">
+                      <label for="date_inspection" class="form-label">Date d'inspection</label>
+                      <input type="date" class="form-control" id="date_inspection" name="date_inspection">
+                    </div>
+                    <div class="mb-3">
+                      <label for="owner" class="form-label">owner</label>
+                      <input type="text" class="form-control" id="owner" name="owner">
+                    </div> <div class="mb-3">
+                      <label for="manufacturer" class="form-label">manufacturer</label>
+                      <input type="text" class="form-control" id="manufacturer" name="manufacturer">
+                    </div> <div class="mb-3">
+                      <label for="manufacturer_number" class="form-label">manufacturer_number</label>
+                      <input type="text" class="form-control" id="manufacturer_number" name="manufacturer_number">
+                    </div> <div class="mb-3">
+                      <label for="derricking" class="form-label">derricking</label>
+                      <input type="text" class="form-control" id="derricking" name="derricking">
+                    </div>
+
+
+
+                    <div class="mb-3">
+                      <label for="image" class="form-label">Image</label>
+                      <input type="file" class="form-control" id="image" name="image">
+
+                    </div>
+
+
+
+
                     <div class="mb-3">
                       <label for="exampleInputEmail1" class="form-label">Select Form</label>
                       <!-- <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> -->
                       <select name="checklist_form" id="checklist_form" class="form-control" required>
-                        <option  selected="true" disabled="disabled" value=""> Select a form</option>
+                        <option selected="true" disabled="disabled" value=""> Select a form</option>
                         @foreach ( $forms as $form)
                         <option value="{{$form->id}}">{{$form->title}}</option>
 
@@ -65,17 +98,9 @@
                       <label for="exampleInputEmail1" class="form-label">Questions</label>
                       <select name="checklist_questions" id="checklist_questions" class="form-control">
                       <option value=""> Select a Question</option>
-
                       </select>
-
                     </div> -->
-                    <!-- <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">Email address</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-
-                    </div> -->
-
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary float-right">Go To Questions</button>
                   </form>
                 </div>
                 <div class="modal-footer">
@@ -111,11 +136,15 @@
             </td>
             <!-- <td>{{$checklist->sticker_png}}</td> -->
             <td>
-              <a href="{{ route('checklists.edit', $checklist->id) }}" class="btn btn-success">Edit</a>
+              <form action="{{ route('checklists.destroy',$checklist->id) }}" method="Post">
 
+                <a href="{{ route('checklists.edit', $checklist->id) }}" class="btn btn-success">Edit</a>
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-danger">delete</button>
 
+              </form>
             </td>
-            <td> <a href="{{ route('checklists.destroy', $checklist->id) }}" class="btn btn-danger">delete</a> </td>
 
 
 
@@ -127,4 +156,3 @@
   </div>
 </div>
 @endsection
-

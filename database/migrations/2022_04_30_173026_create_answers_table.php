@@ -17,8 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('value')->nullable();
             $table->string('comment')->nullable();
-            $table->string('image')->nullable();
-            $table->foreignId('checklist_id')->constrained('checklists');
+            $table->foreignId('checklist_id')->constrained('checklists')->onDelete('cascade');
             $table->foreignId('question_id')->constrained('questions');
             $table->timestamps();
         });

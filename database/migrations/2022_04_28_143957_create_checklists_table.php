@@ -17,9 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->date('date_inspection')->nullable();
-            $table->string('rapport_pdf')->nullable();
+            $table->string('owner')->nullable();
+            $table->string('manufacturer')->nullable();
+            $table->string('manufacturer_number')->nullable();
+            $table->string('derricking')->nullable();
             $table->string('image')->nullable();
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');;
             $table->timestamps();
         });
     }

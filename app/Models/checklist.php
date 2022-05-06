@@ -14,9 +14,14 @@ class Checklist extends Model
         'date_inspection',
         'rapport_pdf',
         'stiker_png',
-        'image'
+        'image',
+        'owner',
+        'manufacturer',
+        'manufacturer_number',
+        'derricking',
+        'user_id'
     ];
-
+   
     // relationships
     public function user()
     {

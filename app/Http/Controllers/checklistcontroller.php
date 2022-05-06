@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChecklistStoreRequest;
 use App\Models\Checklist;
+use App\Models\Forms\Answer;
 use App\Models\Forms\Form;
 use App\Models\Forms\Question;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use File;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class ChecklistController extends Controller
 {
@@ -28,21 +32,21 @@ class ChecklistController extends Controller
 
 
         $forms = Form::all();
-        $questions=Question::all();
-        foreach($forms as  $form) {
+        $questions = Question::all();
+        foreach ($forms as  $form) {
             $questions = Question::where('form_id', $form->id)->get();
             $form->setAttribute('questions', $questions);
         }
 
 
-        return view('checklists.index', compact('checklists','forms','questions'));
+        return view('checklists.index', compact('checklists', 'forms', 'questions'));
     }
 
     public function checklist_pdf(Checklist $checklist)
     {
         // dd($checklist);
         $pdf = App::make('dompdf.wrapper');
-        $pdf = $pdf->loadView('pdf.inspection', compact('checklist'));
+        $pdf = $pdf->loadView('pdf.checklists.inspection', compact('checklist'));
         // return $pdf->download('inspection.pdf');
         return $pdf->stream();
     }
@@ -52,11 +56,8 @@ class ChecklistController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $form=Form::find($request->checklist_form);
-        $questions=Question::where('form_id',$request->checklist_form)->get();
-        return view('checklists.create', compact('questions','form'));
     }
 
     /**
@@ -65,9 +66,31 @@ class ChecklistController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ChecklistStoreRequest $request)
     {
-        //
+        $form = Form::find($request->checklist_form);
+
+        if ($request->file('image')) {
+            // Store image
+            $file = $request->file('image');
+            $filename = date('YmdHi') . $file->getClientOriginalName();
+            $file->move(public_path('images'), $filename);
+            // dd(Auth::user()->id);
+            // Create Checklist
+            $checklist = Checklist::create([
+                'title' => $request->title,
+                'date_inspection' => $request->date_inspection,
+                'owner' => $request->owner,
+                'manufacturer' => $request->manufacturer,
+                'manufacturer_number' => $request->manufacturer_number,
+                'derricking' => $request->derricking,
+                'image' => $filename,
+                'user_id' => Auth::user()->id
+            ]);
+        }
+       
+        $questions = Question::where('form_id', $request->checklist_form)->get();
+        return view('checklists.create', compact('questions', 'form','checklist'));
     }
 
     /**
@@ -80,14 +103,33 @@ class ChecklistController extends Controller
     {
         return $checklist;
     }
-    public function questionsForm(Form $form)
-    {
-       $questions=Question::where('form_id',$form->id)->get();
-        // Fetch all records
+    // public function questionsForm(Form $form)
+    // {
+    //     $questions = Question::where('form_id', $form->id)->get();
+    //     // Fetch all records
 
- 
-      return response()->json($questions);
+
+    //     return response()->json($questions);
+    // }
+
+    public function storeQuestionsForm(Request $request ,Checklist $checklist)
+    {
+        $questions = Question::where('form_id', $request->form_id)->get();
+        // dd($questions);
+        foreach ($questions as $question) {
+            $answer='answer_'.$question->id;
+            $comment='comment_'.$question->id;
+            // var_dump($request[$answer],$request[$comment]);
+            Answer::create([
+                'value'=>$request[$answer],
+                'comment'=>$request[$comment],
+                'checklist_id'=> $checklist->id,
+                'question_id'=>$question->id,
+            ]);
+        }
+        return redirect()->route('checklists.index')->with('message', 'Checklist Saved Succesfully');
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -97,7 +139,7 @@ class ChecklistController extends Controller
      */
     public function edit(Checklist $checklist)
     {
-        //
+        return view('checklists.edit', compact('checklist'));
     }
 
     /**
@@ -107,9 +149,10 @@ class ChecklistController extends Controller
      * @param  \App\Models\Checklist  $checklist
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Checklist $checklist)
+    public function update(ChecklistStoreRequest $request, Checklist $checklist)
     {
-        //
+        $checklist->update($request->all());
+        return redirect()->route('checklists.index')->with('message', 'Checklist updated');
     }
 
     /**
