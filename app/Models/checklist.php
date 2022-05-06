@@ -13,7 +13,8 @@ class Checklist extends Model
         'title',
         'date_inspection',
         'rapport_pdf',
-        'stiker_png'
+        'stiker_png',
+        'image'
     ];
 
     // relationships

@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+   <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>AIS-Dashboard</title>
 
@@ -20,6 +21,9 @@
 
     <!-- Custom styles for this template-->
     <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
 </head>
 <style>
@@ -385,7 +389,40 @@
   <script src="{{asset('js/sb-admin.min.js')}}"></script>
 
 
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $('#checklist_form').change(function() {
+      var id = $(this).val();
+      console.log(id);
 
+    //   $('#checklist_questions').find('option').not(':first').remove();
+      $('#checklist_questions').find('option').remove();
+
+      $.ajax({
+        url: 'questionsForm/' + id,
+        type: 'get',
+
+        dataType: 'json',
+        success: function(response) {
+            console.log(response);
+          var len = 0;
+          if (response != null) {
+            len = response.length;
+          }
+
+          if (len > 0) {
+            for (var i = 0; i < len; i++) {
+              var id = response[i].id;
+              var name = response[i].title;
+              var option = "<option value='" + id + "'>" + name + "</option>";
+              $("#checklist_questions").append(option);
+            }
+          }
+        }
+      })
+    });
+  });
+</script>
 
 </body>
 

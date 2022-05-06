@@ -32,6 +32,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
  Route::middleware(['auth'])->group(function () {
     Route::resource('checklists', ChecklistController::class);
     Route::get('checklist_pdf/{checklist}',[ChecklistController::class,'checklist_pdf'])->name('checklist_pdf');
+    Route::get('questionsForm/{form}',[ChecklistController::class,'questionsForm'])->name('questionsForm');
     Route::resource('rapport', ReportController::class);
     Route::group(['middleware' => ['admin']], function () {
         Route::resource('employees', EmployeeController::class);

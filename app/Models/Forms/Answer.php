@@ -15,7 +15,7 @@ class Answer extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['value','comment','image','checklist_id','question_id'];
+    protected $fillable = ['value','comment','checklist_id','question_id'];
 
       // relationships
       public function question()

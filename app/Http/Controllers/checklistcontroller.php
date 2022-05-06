@@ -28,13 +28,14 @@ class ChecklistController extends Controller
 
 
         $forms = Form::all();
+        $questions=Question::all();
         foreach($forms as  $form) {
             $questions = Question::where('form_id', $form->id)->get();
             $form->setAttribute('questions', $questions);
         }
 
 
-        return view('checklists.index', compact('checklists','forms'));
+        return view('checklists.index', compact('checklists','forms','questions'));
     }
 
     public function checklist_pdf(Checklist $checklist)
@@ -51,9 +52,11 @@ class ChecklistController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $form=Form::find($request->checklist_form);
+        $questions=Question::where('form_id',$request->checklist_form)->get();
+        return view('checklists.create', compact('questions','form'));
     }
 
     /**
@@ -75,7 +78,15 @@ class ChecklistController extends Controller
      */
     public function show(Checklist $checklist)
     {
-        //
+        return $checklist;
+    }
+    public function questionsForm(Form $form)
+    {
+       $questions=Question::where('form_id',$form->id)->get();
+        // Fetch all records
+
+ 
+      return response()->json($questions);
     }
 
     /**

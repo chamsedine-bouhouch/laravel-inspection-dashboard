@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->date('date_inspection')->nullable();
             $table->string('rapport_pdf')->nullable();
-            $table->string('sticker_png')->nullable();
+            $table->string('image')->nullable();
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });

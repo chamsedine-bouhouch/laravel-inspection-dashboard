@@ -18,30 +18,8 @@
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-
+          <!-- Search -->
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="{{route('checklists.create')}}">Disabled</a>
-        </li>
-      </ul> -->
             <form method="GET" action="{{ route('checklists.index') }}">
               <div class="form-row align-items-center">
                 <div class="col">
@@ -52,9 +30,8 @@
                 </div>
               </div>
             </form>
-
           </div>
-          <!-- Button trigger modal -->
+          <!-- Button trigger modal ADD Checklist -->
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
             ADD Checklist
           </button>
@@ -70,48 +47,40 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form>
+                  <form method="GET" action="{{ route('checklists.create') }}">
+                  @csrf
                     <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">Email address</label>
+                      <label for="exampleInputEmail1" class="form-label">Select Form</label>
                       <!-- <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> -->
-                      <select name="checklist_form" id="" class="form-control">
+                      <select name="checklist_form" id="checklist_form" class="form-control" required>
+                        <option  selected="true" disabled="disabled" value=""> Select a form</option>
                         @foreach ( $forms as $form)
                         <option value="{{$form->id}}">{{$form->title}}</option>
-                          
+
                         @endforeach
-                        
+
+                      </select>
+                    </div>
+                    <!-- <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Questions</label>
+                      <select name="checklist_questions" id="checklist_questions" class="form-control">
+                      <option value=""> Select a Question</option>
+
                       </select>
 
-                    </div>
-                    <div class="mb-3">
+                    </div> -->
+                    <!-- <div class="mb-3">
                       <label for="exampleInputEmail1" class="form-label">Email address</label>
                       <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
 
-                    </div>
-                    <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">Email address</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div> -->
 
-                    </div>
-                    <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">Email address</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-
-                    </div>
-                    <div class="mb-3">
-                      <label for="exampleInputPassword1" class="form-label">Password</label>
-                      <input type="password" class="form-control" id="exampleInputPassword1">
-                    </div>
-                    <div class="mb-3 form-check">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                      <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                    </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </form>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
+                  <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                 </div>
               </div>
             </div>
@@ -138,12 +107,12 @@
             <td>{{$checklist->title}}</td>
             <td>{{$checklist->date_inspection}}</td>
             <td>
-            <a href="{{ route('checklist_pdf', $checklist->id) }}" class="btn btn-outline-info">pdf</a>
+              <a href="{{ route('checklist_pdf', $checklist->id) }}" class="btn btn-outline-info">pdf</a>
             </td>
             <!-- <td>{{$checklist->sticker_png}}</td> -->
             <td>
-            <a href="{{ route('checklists.edit', $checklist->id) }}" class="btn btn-success">Edit</a>
-             
+              <a href="{{ route('checklists.edit', $checklist->id) }}" class="btn btn-success">Edit</a>
+
 
             </td>
             <td> <a href="{{ route('checklists.destroy', $checklist->id) }}" class="btn btn-danger">delete</a> </td>
@@ -158,3 +127,4 @@
   </div>
 </div>
 @endsection
+
