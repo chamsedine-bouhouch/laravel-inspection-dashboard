@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\CertificationController;
 use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EquipmentController;
+use App\Http\Controllers\FormController;
 use App\Http\Controllers\ReportController;
 use illuminate\support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -35,8 +38,16 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
     // Route::get('questionsForm/{form}',[ChecklistController::class,'questionsForm'])->name('questionsForm');
     Route::post('questionsForm/{checklist}',[ChecklistController::class,'storeQuestionsForm'])->name('storeQuestionsForm');
     Route::resource('rapport', ReportController::class);
+    // 
+    // 
+    // 
     Route::group(['middleware' => ['admin']], function () {
         Route::resource('employees', EmployeeController::class);
+        Route::resource('certifications', CertificationController::class);
+        Route::resource('equipments', EquipmentController::class);
+        Route::resource('certifications', CertificationController::class);
+        Route::resource('forms', FormController::class);
+         
     });
 });
 

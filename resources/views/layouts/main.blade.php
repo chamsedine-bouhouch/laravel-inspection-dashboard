@@ -113,6 +113,30 @@
                 </a>
            
             </li> 
+          <li class="nav-item">
+                <a class="nav-link " href="{{route('certifications.index')}}" >
+                    <i class="fas fa-fw fa-certificate"></i>
+                    
+                    <span>Certificates</span>
+                </a>
+           
+            </li> 
+          <li class="nav-item">
+                <a class="nav-link " href=" " >
+                    <i class="fas fa-fw fa-toolbox"></i>
+                    
+                    <span>Equipments</span>
+                </a>
+           
+            </li> 
+          <li class="nav-item">
+                <a class="nav-link " href="" >
+                    <i class="fas fa-fw fa-question"></i>
+                    
+                    <span>Forms</span>
+                </a>
+           
+            </li> 
 
             <!-- Nav Item - Pages Collapse Menu -->
             <!-- <li class="nav-item">

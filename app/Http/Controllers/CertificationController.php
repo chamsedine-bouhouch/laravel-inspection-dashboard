@@ -14,7 +14,12 @@ class CertificationController extends Controller
      */
     public function index()
     {
-        //
+        $certifications = Certification::all();
+        // if ($request->has('search')) {
+        //     $checklists = Checklist::where('title', 'like', "%{$request->search}%")->orWhere('date_inspection', 'like', "%{$request->search}%")->get();
+        // }
+
+        return view('certifications.index', compact('certifications'));
     }
 
     /**

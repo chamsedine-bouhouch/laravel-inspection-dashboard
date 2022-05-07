@@ -29,17 +29,8 @@ class ChecklistController extends Controller
             $checklists = Checklist::where('title', 'like', "%{$request->search}%")->orWhere('date_inspection', 'like', "%{$request->search}%")->get();
         }
 
-
-
         $forms = Form::all();
-        $questions = Question::all();
-        foreach ($forms as  $form) {
-            $questions = Question::where('form_id', $form->id)->get();
-            $form->setAttribute('questions', $questions);
-        }
-
-
-        return view('checklists.index', compact('checklists', 'forms', 'questions'));
+        return view('checklists.index', compact('checklists', 'forms'));
     }
 
     public function checklist_pdf(Checklist $checklist)
