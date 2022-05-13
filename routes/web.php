@@ -30,10 +30,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
  Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+ Route::resource('checklists', ChecklistController::class);
+
 
 
  Route::middleware(['auth'])->group(function () {
-    Route::resource('checklists', ChecklistController::class);
     Route::get('checklist_pdf/{checklist}',[ChecklistController::class,'checklist_pdf'])->name('checklist_pdf');
     // Route::get('questionsForm/{form}',[ChecklistController::class,'questionsForm'])->name('questionsForm');
     Route::post('questionsForm/{checklist}',[ChecklistController::class,'storeQuestionsForm'])->name('storeQuestionsForm');

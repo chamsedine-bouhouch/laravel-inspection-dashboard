@@ -11,6 +11,11 @@
 </div>
 <div class="shadow-lg mw-100  vw-100 bg-white rounded">
   <div class="card-body mw-100 p-0 ">
+  <div class="container mt-4">
+
+
+
+</div>
     <div class="table-responsive p-0 mw-100">
       <table class="table mw-100 vw-100">
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -18,6 +23,9 @@
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
+
+
+
           <!-- Search -->
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <form method="GET" action="{{ route('checklists.index') }}">

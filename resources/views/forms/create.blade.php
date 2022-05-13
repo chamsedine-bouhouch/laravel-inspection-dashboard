@@ -31,12 +31,31 @@
               <div class="col-md-6" >
                 <label for="answer_{{$question->id}}"class="form-label">answer_{{$question->id}}</label>
                 <!-- <input id="answer_{{$question->id}}" type="text" class="form-control " name="answer_{{$question->id}}"> -->
-               <select name="answer_{{$question->id}}" id="answer_{{$question->id}}" class="form-control" required>
+               <!-- <select name="answer_{{$question->id}}" id="answer_{{$question->id}}" class="form-control" required>
                         <option selected="true" disabled="disabled" value=""> Select Answer</option>
                         <option value="U">U</option>
                         <option value="S">S</option>
                         <option value="N/A">N/A</option>
-                      </select>
+                      </select> -->
+bbbbb
+                      <div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+  <label class="form-check-label" for="exampleRadios1">
+    Default radio
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+  <label class="form-check-label" for="exampleRadios2">
+    Second default radio
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
+  <label class="form-check-label" for="exampleRadios3">
+    Disabled radio
+  </label>
+</div>
               </div>
               <div class="col-md-6" >
                 <label for="comment_{{$question->id}}" class="col-form-label text-md-end">comment_{{$question->id}}</label>

@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 //});
 
 //Users
+Route::resource('checklists', ChecklistController::class);
+
 Route::prefix('/user')->group(function(){
    Route::POST('/login', 'api\v1\LoginController@login');
 

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Certification;
+use App\Models\Checklist;
+ use App\Models\User;
 use Illuminate\Http\Request;
-
+ 
 class HomeController extends Controller
 {
     /**
@@ -23,6 +26,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $info=[];
+        $info['employees']=User::where('isAdmin', false)->count();
+        $info['checklists']=Checklist::all()->count();
+        $info['certifications']=Certification::all()->count();
+        // dd($info);
+        return view('home',compact('info'));
     }
 }

@@ -180,10 +180,10 @@
             <td>{{$employee->qualification}} </td>
             <td>
               <form action="{{ route('employees.destroy',$employee->id) }}" method="Post">
-
-                <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-success">Edit</a>
-                @csrf
+              @csrf
                 @method('DELETE')
+                <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-success">Edit</a>
+             
                 <button class="btn btn-danger">delete</button>
 
               </form>

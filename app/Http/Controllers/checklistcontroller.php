@@ -7,13 +7,12 @@ use App\Models\Checklist;
 use App\Models\Forms\Answer;
 use App\Models\Forms\Form;
 use App\Models\Forms\Question;
-use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use File;
-use GuzzleHttp\Promise\Create;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ChecklistController extends Controller
 {
@@ -35,11 +34,32 @@ class ChecklistController extends Controller
 
     public function checklist_pdf(Checklist $checklist)
     {
-        // dd($checklist);
         $pdf = App::make('dompdf.wrapper');
         $pdf = $pdf->loadView('pdf.checklists.inspection', compact('checklist'));
         // return $pdf->download('inspection.pdf');
+        // $this->emailChecklist($checklist);
+
         return $pdf->stream();
+    }
+    public function emailChecklist(Checklist $checklist)
+    {
+        // dd($checklist);
+        $path = public_path('uploads');
+        $name = 'checklist_' . $checklist->id . '.pdf';
+        $filename = $path . '/' . $name;
+        // create folder
+        if (!File::exists($path)) {
+            File::makeDirectory($path, $mode = 0777, true, true);
+        }
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf = $pdf->loadView('pdf.checklists.inspection', compact('checklist'))
+            ->save($filename);
+        // return $pdf->download('inspection.pdf');
+
+        Mail::to(Auth::user()->email)->send(new \App\Mail\Contact($filename));
+
+        return 0;
     }
 
     /**
@@ -79,9 +99,9 @@ class ChecklistController extends Controller
                 'user_id' => Auth::user()->id
             ]);
         }
-       
+
         $questions = Question::where('form_id', $request->checklist_form)->get();
-        return view('checklists.create', compact('questions', 'form','checklist'));
+        return view('checklists.create', compact('questions', 'form', 'checklist'));
     }
 
     /**
@@ -103,21 +123,22 @@ class ChecklistController extends Controller
     //     return response()->json($questions);
     // }
 
-    public function storeQuestionsForm(Request $request ,Checklist $checklist)
+    public function storeQuestionsForm(Request $request, Checklist $checklist)
     {
         $questions = Question::where('form_id', $request->form_id)->get();
         // dd($questions);
         foreach ($questions as $question) {
-            $answer='answer_'.$question->id;
-            $comment='comment_'.$question->id;
+            $answer = 'answer_' . $question->id;
+            $comment = 'comment_' . $question->id;
             // var_dump($request[$answer],$request[$comment]);
             Answer::create([
-                'value'=>$request[$answer],
-                'comment'=>$request[$comment],
-                'checklist_id'=> $checklist->id,
-                'question_id'=>$question->id,
+                'value' => $request[$answer],
+                'comment' => $request[$comment],
+                'checklist_id' => $checklist->id,
+                'question_id' => $question->id,
             ]);
         }
+        $this->emailChecklist($checklist);
         return redirect()->route('checklists.index')->with('message', 'Checklist Saved Succesfully');
     }
 
